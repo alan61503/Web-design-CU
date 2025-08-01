@@ -1,0 +1,204 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+  <meta charset="UTF-8"> 
+  <title>User Registration</title> 
+  <style> 
+    body { 
+      font-family: Arial; 
+      margin: 20px; 
+      background-color: #292929; 
+    } 
+    form { 
+      background: #9facba; 
+      border-radius: 20px; 
+      border-width: 0px; 
+      padding: 20px; 
+      max-width: 500px; 
+      margin: auto; 
+      border-radius: 10px; 
+      box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+    } 
+    label { 
+      display: block; 
+      margin-top: 15px; 
+    } 
+    input, select { 
+      width: 480px; 
+      padding: 8px; 
+      margin-top: 5px; 
+      border-radius: 15px; 
+      border-width: 0px; 
+    } 
+    .error { 
+      color: red; 
+      font-size: 14px; 
+    } 
+    button { 
+      margin-top: 20px; 
+      padding: 10px; 
+      background-color: #007BFF; 
+      color: rgb(225, 220, 220); 
+      border: none; 
+      width: 100%; 
+      cursor: pointer; 
+      border-radius: 15px; 
+      border-width: 0px; 
+      width:200px; 
+      display: block; 
+      margin: 20px auto 0; 
+    } 
+    .termcondition { 
+      display: flex; 
+      align-items: center; 
+      margin-top: 10px; 
+      font-size: 14px; 
+    } 
+    .termcondition input[type="checkbox"] { 
+      margin-right: 10px; 
+    } 
+  </style> 
+</head> 
+<body> 
+  <form id="registrationForm" onsubmit="return validateForm()"> 
+    <h1>Alan Chris Dsilva 2360322</h1> 
+    <h2>User Registration</h2> 
+
+    <label>Full Name:</label> 
+    <input type="text" id="fullName" required> 
+
+    <label>Age:</label> 
+    <input type="number" id="age" min="18" max="100" required> 
+
+    <label>Email:</label> 
+    <input type="email" id="email" required> 
+
+    <label>Password:</label> 
+    <input type="password" id="password" required> 
+
+    <label>Confirm Password:</label> 
+    <input type="password" id="confirmPassword" required> 
+
+    <label>Phone Number:</label> 
+    <input type="text" id="phone" required> 
+
+    <label>Date of Birth:</label> 
+    <input type="date" id="dob" required> 
+
+    <label>Country:</label> 
+    <select id="country" required> 
+      <option value="">--Select Country--</option> 
+      <option value="India">India</option> 
+      <option value="USA">USA</option> 
+      <option value="UK">UK</option> 
+      <option value="Germany">Germany</option> 
+    </select> 
+
+    <div class="termcondition"> 
+      <label> 
+        <input type="checkbox" id="terms" required> 
+        I accept the Terms & Conditions 
+      </label> 
+    </div> 
+
+    <div id="errorMsg" class="error"></div> 
+
+    <button type="submit">Register</button> 
+  </form> 
+
+  <script> 
+    function validateForm() { 
+      const name = document.getElementById("fullName").value.trim(); 
+      const age = parseInt(document.getElementById("age").value); 
+      const email = document.getElementById("email").value.trim(); 
+      const password = document.getElementById("password").value; 
+      const confirmPassword = document.getElementById("confirmPassword").value; 
+      const phone = document.getElementById("phone").value.trim(); 
+      const dob = new Date(document.getElementById("dob").value); 
+      const country = document.getElementById("country").value; 
+      const termsAccepted = document.getElementById("terms").checked; 
+      const errorDiv = document.getElementById("errorMsg"); 
+
+      errorDiv.innerHTML = ""; 
+
+      // Full Name 
+      if (name === "") { 
+        errorDiv.innerHTML = "Full Name is required."; 
+        return false; 
+      } 
+
+      // Age 
+      if (isNaN(age) || age < 18 || age > 100) { 
+        errorDiv.innerHTML = "Age must be between 18 and 100."; 
+        return false; 
+      } 
+
+      // Email 
+      if (!email.includes("@") || !email.includes(".")) { 
+        errorDiv.innerHTML = "Enter a valid email address."; 
+        return false; 
+      } 
+      if (email.indexOf("@") === 0 || email.endsWith(".") || email.indexOf(".") < email.indexOf("@")) { 
+        errorDiv.innerHTML = "Invalid email format."; 
+        return false; 
+      } 
+
+      // Password 
+      if (password.length < 8) { 
+        errorDiv.innerHTML = "Password must be at least 8 characters long."; 
+        return false; 
+      } 
+
+      let hasUpper = false, hasLower = false, hasDigit = false, hasSpecial = false; 
+      for (let ch of password) { 
+        if (ch >= 'A' && ch <= 'Z') hasUpper = true; 
+        else if (ch >= 'a' && ch <= 'z') hasLower = true; 
+        else if (!isNaN(ch)) hasDigit = true; 
+        else hasSpecial = true; 
+      } 
+
+      if (!hasUpper || !hasLower || !hasDigit || !hasSpecial) { 
+        errorDiv.innerHTML = "Password must include uppercase, lowercase, number, and special character."; 
+        return false; 
+      } 
+
+      // Confirm Password 
+      if (password !== confirmPassword) { 
+        errorDiv.innerHTML = "Passwords do not match."; 
+        return false; 
+      } 
+
+      // Phone 
+      if (phone.length !== 10 || isNaN(phone)) { 
+        errorDiv.innerHTML = "Enter a valid 10-digit phone number."; 
+        return false; 
+      } 
+
+      // DOB 
+      const today = new Date(); 
+      const ageFromDob = today.getFullYear() - dob.getFullYear(); 
+      const monthDiff = today.getMonth() - dob.getMonth(); 
+      if (ageFromDob < 18 || (ageFromDob === 18 && monthDiff < 0) || 
+          (ageFromDob === 18 && monthDiff === 0 && today.getDate() < dob.getDate())) { 
+        errorDiv.innerHTML = "You must be at least 18 years old."; 
+        return false; 
+      } 
+
+      // Country 
+      if (country === "") { 
+        errorDiv.innerHTML = "Please select a country."; 
+        return false; 
+      } 
+
+      // Terms 
+      if (!termsAccepted) { 
+        errorDiv.innerHTML = "You must accept the Terms & Conditions."; 
+        return false; 
+      } 
+
+      alert("Registration Successful!"); 
+      return true; 
+    } 
+  </script> 
+</body> 
+</html>
