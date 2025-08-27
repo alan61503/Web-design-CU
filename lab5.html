@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Registration Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+    .form-container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      width: 400px;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .terms {
+      margin-top: 10px;
+    }
+    button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 10px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .error {
+      color: red;
+      font-size: 13px;
+    }
+    .footer {
+      margin-top: 20px;
+      text-align: center;
+      font-weight: bold;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+
+<div class="form-container">
+  <h2>User Registration</h2>
+  <form id="regForm" onsubmit="return validateForm()">
+    <label>Full Name *</label>
+    <input type="text" id="name">
+
+    <label>Age *</label>
+    <input type="number" id="age">
+
+    <label>Email *</label>
+    <input type="text" id="email">
+
+    <label>Password *</label>
+    <input type="password" id="password">
+
+    <label>Confirm Password *</label>
+    <input type="password" id="confirmPassword">
+
+    <label>Phone Number *</label>
+    <input type="text" id="phone">
+
+    <label>Date of Birth *</label>
+    <input type="date" id="dob">
+
+    <label>Country *</label>
+    <select id="country">
+      <option value="">--Select Country--</option>
+      <option value="India">India</option>
+      <option value="USA">USA</option>
+      <option value="UK">UK</option>
+      <option value="Canada">Canada</option>
+    </select>
+
+    <div class="terms">
+      <input type="checkbox" id="terms"> I accept Terms & Conditions
+    </div>
+
+    <button type="submit">Register</button>
+  </form>
+
+  <div class="footer">
+    Name: <b>Alan</b><br>
+    Reg No: <b>2360322</b>
+  </div>
+</div>
+
+<script>
+  function validateForm() {
+    let name = document.getElementById("name").value.trim();
+    let age = document.getElementById("age").value;
+    let email = document.getElementById("email").value.trim();
+    let pass = document.getElementById("password").value;
+    let cpass = document.getElementById("confirmPassword").value;
+    let phone = document.getElementById("phone").value;
+    let dob = document.getElementById("dob").value;
+    let country = document.getElementById("country").value;
+    let terms = document.getElementById("terms").checked;
+
+    // Full Name
+    if (name === "") {
+      alert("Full Name is required");
+      return false;
+    }
+
+    // Age
+    if (age < 18 || age > 100) {
+      alert("Age must be between 18 and 100");
+      return false;
+    }
+
+    // Email
+    let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    if (!email.match(emailPattern)) {
+      alert("Enter a valid Email");
+      return false;
+    }
+
+    // Password
+    let passPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!#%*?&])[A-Za-z\d@$!#%*?&]{8,}$/;
+    if (!pass.match(passPattern)) {
+      alert("Password must be at least 8 characters and include uppercase, lowercase, number and special character");
+      return false;
+    }
+
+    // Confirm Password
+    if (pass !== cpass) {
+      alert("Passwords do not match");
+      return false;
+    }
+
+    // Phone
+    let phonePattern = /^[0-9]{10}$/;
+    if (!phone.match(phonePattern)) {
+      alert("Phone must be 10 digits");
+      return false;
+    }
+
+    // DOB (Check if at least 18 years old)
+    let birthDate = new Date(dob);
+    let today = new Date();
+    let ageFromDOB = today.getFullYear() - birthDate.getFullYear();
+    let monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      ageFromDOB--;
+    }
+    if (ageFromDOB < 18) {
+      alert("You must be at least 18 years old");
+      return false;
+    }
+
+    // Country
+    if (country === "") {
+      alert("Please select a country");
+      return false;
+    }
+
+    // Terms
+    if (!terms) {
+      alert("You must accept Terms & Conditions");
+      return false;
+    }
+
+    alert("Registration Successful!");
+    return true;
+  }
+</script>
+
+</body>
+</html>
