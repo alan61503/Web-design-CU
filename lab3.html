@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSS Transition & Animation Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        /* CSS Transition Example */
+        .btn {
+            background-color: blue;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.5s, transform 0.5s;
+        }
+
+        .btn:hover {
+            background-color: green;
+            transform: scale(1.2);
+        }
+
+        /* CSS Animation Example */
+        .box {
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            margin: 40px auto;
+            position: relative;
+            animation: moveBox 3s infinite alternate;
+        }
+
+        @keyframes moveBox {
+            from { left: 0; }
+            to { left: 150px; }
+        }
+    </style>
+</head>
+<body>
+
+    <h2>CSS Transition Example</h2>
+    <button class="btn">Hover Me</button>
+
+    <h2>CSS Animation Example</h2>
+    <div class="box"></div>
+
+</body>
+</html>
