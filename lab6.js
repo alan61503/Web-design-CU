@@ -6,7 +6,7 @@ fs.writeFile('example.txt', 'Hello, this is a new file.', (err) => {
     if (err) throw err;
     console.log('File created and data written.');
 
-    // 2. Append File
+    // 2. Append Filenode
     fs.appendFile('example.txt', '\nThis line is appended.', (err) => {
         if (err) throw err;
         console.log('Data appended to file.');
