@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $("button").click(function(){
+                    var div = $("div");
+                    div.animate({height: '300px', opacity: '0.4'},
+                    "slow", function() {
+                        div.animate({width: '300px', opacity: '0.8'}, "slow", function() {
+                            div.animate({height: '100px', opacity: '0.4'}, "slow", function() {
+                                div.animate({width: '100px', opacity: '0.8'}, "slow");
+                            });
+                        });
+                    });
+                });
+            });
+            </script>
+    </head>
+    <body>
+        <button>Click to animate</button>
+        <p> click button to apply animation</p>
+        <div style="width:100px;height:100px;background-color:red;position:absolute;"></div>
+</html>
